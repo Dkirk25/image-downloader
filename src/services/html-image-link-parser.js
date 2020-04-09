@@ -1,7 +1,6 @@
 const cheerio = require('cheerio')
 
 function parseHtml(html) {
-  console.log('HTML', html);
   const $ = cheerio.load(html);
   const links = []
   $('img').each(function(i, element) {

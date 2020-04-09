@@ -14,6 +14,10 @@ class ImageDownloader {
       throw new Error('No Output Directory')
     } else {
       console.log('Output Dir:', this.outputDir)
+      if (!fs.existsSync(this.outputDir)) {
+        console.log("Created output directory", this.outputDir);
+        fs.mkdirSync(this.outputDir);
+      }
     }
 
     const {filename, uri} = opts;

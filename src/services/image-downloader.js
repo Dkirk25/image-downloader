@@ -8,7 +8,7 @@ class ImageDownloader {
     this.outputDir = outputDir;
     this.download.bind(this);
   }
-
+ 
   download(opts, callback) {
     if (!this.outputDir) {
       throw new Error('No Output Directory')
@@ -21,7 +21,6 @@ class ImageDownloader {
     }
 
     const {filename, uri} = opts;
-    
     
     request.head(uri, (err, res, body) => {
       console.log('Res Headers', res.headers);

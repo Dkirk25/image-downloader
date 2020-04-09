@@ -3,13 +3,10 @@ const path = require('path');
 const request = require('request');
 
 const parseHTML = require('./src/services/html-image-link-parser');
-
 const ImageDownloader = require('./src/services/image-downloader');
 
 const outputDir = path.join(__dirname, 'images')
-
 const argv = require('yargs').argv
-
 const downloader = new ImageDownloader(outputDir);
 
 const BING = 'https://www.bing.com/images/search'

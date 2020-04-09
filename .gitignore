@@ -1,5 +1,6 @@
 # Custom ignores
 images/
+node_modules/
 
 # Logs
 logs

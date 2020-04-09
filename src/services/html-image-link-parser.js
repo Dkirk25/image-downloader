@@ -1,7 +1,5 @@
 const cheerio = require("cheerio");
 
-// rg_i Q4LuWd tx8vtf
-
 function parseHtml(html) {
   const $ = cheerio.load(html);
   const links = [];
@@ -11,8 +9,7 @@ function parseHtml(html) {
     links.push(link);
   });
 
-  console.log("Links", links);
-  return links.filter((link) => link.indexOf("http") !== -1);
+  return links.filter((link) => !!link && link.indexOf("http") !== -1);
 }
 
 module.exports = parseHtml;

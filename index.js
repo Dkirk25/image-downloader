@@ -12,18 +12,34 @@ const downloader = new ImageDownloader(outputDir);
 const BING = "https://www.bing.com/images/search";
 const GOOGLE = "https://www.google.com/search";
 
-function main(args) {
+//www.google.com/search?q=pikachu&tbm=isch
+
+https: function main(args) {
   const { platform, query, limit = 10 } = args;
 
-  if (platform === "g") {
-    platform == GOOGLE;
-  } else {
-    platform == BING;
+  if (!limit) {
+    throw new Error("invalid limit");
   }
 
-  const uri = `${BING}?${qs.stringify({ q: query })}`;
+  let base = BING;
+  const params = {
+    q: query,
+  };
 
-  console.log("Requesting", uri);
+  if (platform === "google") {
+    base = GOOGLE;
+    params.tbm = "isch";
+  }
+
+  const uri = `${base}?${qs.stringify(params)}`;
+
+  console.log("Config", {
+    uri,
+    platform,
+    limit,
+    query,
+  });
+
   request(uri, function (error, response, body) {
     try {
       const links = parseHTML(body);
@@ -31,8 +47,15 @@ function main(args) {
 
       if (links.length > 0) {
         links.slice(0, limit).forEach((link, i) => {
-          downloader.download({ uri: link, filename: `${i}` }, function () {
-            console.log("done");
+          downloader.download({ uri: link, filename: `${i}` }, function (
+            err,
+            file
+          ) {
+            if (err) {
+              console.error(err);
+              return;
+            }
+            console.log(`Saved ${file}`);
           });
         });
       } else {
